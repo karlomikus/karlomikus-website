@@ -4,8 +4,8 @@ title: Your friend wants a website
 date: '2025-03-06'
 permalink: /blog/so-you-a-friend-that-needs-a-website/
 published: false
-hero_image: blog/blog_hero_images/friend-website-hero.png
-og_image: blog/blog_hero_images/friend-website-hero.png
+hero_image: /assets/blog/blog_hero_images/friend-website-hero.png
+og_image: /assets/blog/blog_hero_images/friend-website-hero.png
 ---
 <p>You constantly humble brag to your friends how you are software developer and how successful you are and one day they come to you asking if you can make a website for their small company, nothing special, a single webpage with a contact form, they just want some web presence.</p>
 

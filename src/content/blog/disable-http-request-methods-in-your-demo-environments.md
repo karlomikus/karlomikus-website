@@ -4,15 +4,14 @@ title: Disable HTTP request methods in your demo environments
 date: '2022-12-21'
 permalink: /blog/disable-http-request-methods-in-your-demo-environments/
 published: true
-hero_image: blog/blog_hero_images/demo-env-post.jpg
+hero_image: /assets/blog/blog_hero_images/demo-env-post.jpg
 og_title: Disable HTTP request methods in your demo environments
 og_description: >-
   Here's a quick tip for your public demo environments. Let's say that you want
   to disable unsafe HTTP request methods, like POST and DELETE, to prevent users
   from messing up your demo instance data.
 og_type: article
-og_image: blog/blog_hero_images/demo-env-post.jpg
-author: e9e0cc08-2054-4b6c-a5ec-699b1591125a
+og_image: /assets/blog/blog_hero_images/demo-env-post.jpg
 ---
 <p>Here&#39;s a quick tip for your public demo environments. Let&#39;s say that you want to disable &quot;unsafe&quot; HTTP request methods, like POST and DELETE, to prevent users from messing up your demo instance data.</p>
 

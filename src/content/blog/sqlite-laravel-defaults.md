@@ -4,21 +4,22 @@ title: SQLite optimizations in Laravel
 date: '2024-12-08'
 permalink: /blog/sqlite-laravel-defaults/
 published: true
-hero_image: blog/blog_hero_images/blog-hero-images.webp
-og_image: blog/blog_hero_images/blog-hero-images.webp
-author: e9e0cc08-2054-4b6c-a5ec-699b1591125a
+hero_image: /assets/blog/blog_hero_images/blog-hero-images.webp
+og_image: /assets/blog/blog_hero_images/blog-hero-images.webp
 ---
-<p>SQLite has been getting more and more attention as a production ready database. It is the default database when you start a new project in Laravel, and recently I&#39;ve been using it in production for my <a href="https://barassistant.app/">small side project</a>.</p>
+SQLite has been getting more and more attention as a production ready database. It is the default database when you start a new project in Laravel, and recently I&#39;ve been using it in production for my [small side project](https://barassistant.app/).
 
-<p>This new popularity spawned a lot of discussion about available optimizations and better default configurations. I&#39;m not going to go through them, but here is a few good posts from the web:</p>
+This new popularity spawned a lot of discussion about available optimizations and better default configurations. I&#39;m not going to go through them, but here is a few good posts from the web:
 
-<ul><li><a href="https://kerkour.com/sqlite-for-servers">Optimizing SQLite for servers</a></li><li><a href="https://developer.android.com/topic/performance/sqlite-performance-best-practices">Best practices for SQLite performance</a></li><li><a href="https://briandouglas.ie/sqlite-defaults/">Sensible SQLite defaults</a></li></ul>
+- [Optimizing SQLite for servers](https://kerkour.com/sqlite-for-servers)
+- [Best practices for SQLite performance](https://developer.android.com/topic/performance/sqlite-performance-best-practices)
+- [Sensible SQLite defaults](https://briandouglas.ie/sqlite-defaults)
 
-<p>Here I will show you how to use and enable them in your Laravel applications.</p>
+Here I will show you how to use and enable them in your Laravel applications.
 
-<p>Laravel already supports some of the common configurations via default database connections config array. Here is the config example with recommendations from above listed posts.</p>
+Laravel already supports some of the common configurations via default database connections config array. Here is the config example with recommendations from above listed posts.
 
-~~~php
+```php
 'sqlite' => [
     'driver' => 'sqlite',
     'url' => env('DATABASE_URL'),
@@ -29,13 +30,13 @@ author: e9e0cc08-2054-4b6c-a5ec-699b1591125a
     'busy_timeout' => 5000,
     'synchronous' => 'NORMAL',
 ],
-~~~
+```
 
-<p>One caveat that you need to be aware of is that some of these configurations are permanent (like WAL mode) and some need to be setup before every connection to the database.</p>
+One caveat that you need to be aware of is that some of these configurations are permanent (like WAL mode) and some need to be setup before every connection to the database.
 
-<p>Laravel will automatically handle the configurations defined in the config file, but what if you want to add your own. For that you can use <code>AppServiceProvider.php</code> file and the <code>boot()</code> method.</p>
+Laravel will automatically handle the configurations defined in the config file, but what if you want to add your own. For that you can use <code>AppServiceProvider.php</code> file and the <code>boot()</code> method.
 
-~~~php
+```php
 public function boot()
 {
     DB::statement('
@@ -45,19 +46,19 @@ public function boot()
         PRAGMA page_size = 8192;
     ');
 }
-~~~
+```
 
-<p>This will always set the PRAGMA configurations for the current connection. To check if the configurations are applied you can use the following snippet.</p>
+This will always set the PRAGMA configurations for the current connection. To check if the configurations are applied you can use the following snippet.
 
-~~~php
+```php
 <?php
 
 use Illuminate\Support\Facades\DB;
 
 $value = DB::select('PRAGMA temp_store');
 dump($value);
-~~~
+```
 
-<p>This will show you the current value of the configuration.</p>
+This will show you the current value of the configuration.
 
-<p>Also, always make sure that you consult with the <a href="https://www.sqlite.org/pragma.html">SQLite documentation</a> before you blindly start changing configuration.</p>
+Also, always make sure that you consult with the [SQLite documentation](https://www.sqlite.org/pragma.html) before you blindly start changing configuration.

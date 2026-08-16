@@ -4,14 +4,13 @@ title: PHP development environment with WSL 2 and Debian
 date: '2022-03-03'
 permalink: /blog/php-development-environment-with-wsl-2-and-debian/
 published: true
-hero_image: blog/blog_hero_images/wsl-setup.jpg
+hero_image: /assets/blog/blog_hero_images/wsl-setup.jpg
 og_title: PHP development environment with WSL 2 and Debian
 og_description: >-
   Setup WSL2 development environment for PHP using Apache2, PostgreSQL and
   Debian.
 og_type: article
-og_image: blog/blog_hero_images/wsl-setup.jpg
-author: e9e0cc08-2054-4b6c-a5ec-699b1591125a
+og_image: /assets/blog/blog_hero_images/wsl-setup.jpg
 ---
 <p>Please check <a href="https://docs.microsoft.com/en-us/windows/wsl/install">WSL prerequisites</a> before attempting this setup. This guide assumes that you have at least basic knowledge of linux operating systems.</p>
 
@@ -113,7 +112,7 @@ sudo vim /etc/apache2/sites-available/website.local.conf
 
 <p>Here are the contents of the file. Note that this setup assumes you have a PHP project in <code>/var/www/website</code> directory. You can change your <code>DocumentRoot</code> and <code>Directory</code> variables to reflect your own settings. You can also <a href="https://docs.microsoft.com/en-us/windows/wsl/filesystems">use your windows folders</a>, although I don&#39;t recommend it for performance reasons.</p>
 
-~~~apacheconf
+~~~apache
 <VirtualHost *:443>
     ServerName website.local
 
@@ -144,7 +143,7 @@ sudo service apache2 reload
 
 <p>To access the website we need to modify our hosts file. You should be familiar with this process. Open your hosts file <code>C:\Windows\System32\drivers\etc\hosts</code> and add the following.</p>
 
-~~~clike
+~~~ini
 # WSL
 ::1	    website.local
 127.0.0.1   website.local
@@ -188,7 +187,7 @@ sudo apt-get install php-xdebug
 
 <p>Then append the following to <code>/etc/php/8.1/cli/conf.d/20-xdebug.ini</code> file.</p>
 
-~~~clike
+~~~ini
 xdebug.mode = debug
 xdebug.start_with_request = yes
 ~~~

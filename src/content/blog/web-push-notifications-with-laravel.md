@@ -4,76 +4,76 @@ title: Web push notifications with Laravel
 date: '2022-03-08'
 permalink: /blog/web-push-notifications-with-laravel/
 published: true
-hero_image: blog/blog_hero_images/push-notifications.jpg
+hero_image: /assets/blog/blog_hero_images/push-notifications.jpg
 og_title: Web push notifications with Laravel
 og_description: >-
   Implement service worker and web push notifications using Laravel and
   Javascript
 og_type: article
-og_image: blog/blog_hero_images/push-notifications.jpg
-author: e9e0cc08-2054-4b6c-a5ec-699b1591125a
+og_image: /assets/blog/blog_hero_images/push-notifications.jpg
 ---
-<p>I&#39;m going to start with the fresh Laravel installation. You should also check prerequisites of packages we are going to use.</p>
+I'm going to start with the fresh Laravel installation. You should also check prerequisites of packages we are going to use.
 
-<ul><li><a href="https://github.com/web-push-libs/web-push-php">PHP Web Push</a></li><li><a href="https://laravel-notification-channels.com/webpush/">Web Push Notification Channel</a></li></ul>
+- [PHP Web Push](https://github.com/web-push-libs/web-push-php)
+- [Web Push Notification Channel](https://laravel-notification-channels.com/webpush/)
 
-<p>Code for this project is <a href="https://github.com/karlomikus/webpush-demo">available here</a>.</p>
+Code for this project is [available here](https://github.com/karlomikus/webpush-demo).
 
-<h2>Database and package setup</h2>
+## Database and package setup
 
-<p>You need some kind of database to store user push subscription information. In this case I&#39;m using SQLite3 since it&#39;s the simples to setup.</p>
+You need some kind of database to store user push subscription information. In this case I'm using SQLite3 since it's the simples to setup.
 
-<p>You can skip this step if you already have database ready to use.</p>
+You can skip this step if you already have database ready to use.
 
-<p>First I&#39;ll pull the required packages.</p>
+First I'll pull the required packages.
 
-~~~shell
+```shell
 sudo apt update
 sudo apt-get install sqlite3 php8.1-sqlite3 php8.1-gmp
 sudo service php8.1-fpm restart
-~~~
+```
 
-<p>Then I will create a new file in <code>database/</code> folder.</p>
+Then I will create a new file in `database/` folder.
 
-~~~shell
+```shell
 touch database/database.sqlite
-~~~
+```
 
-<p>The last thing is to update my <code>.env</code> file.</p>
+The last thing is to update my `.env` file.
 
-~~~clike
+```ini
 DB_CONNECTION=sqlite
 DB_DATABASE=/var/www/push-project/database/database.sqlite
 DB_FOREIGN_KEYS=true
-~~~
+```
 
-<p>Laravel support multiple notification drivers. You can find them <a href="https://laravel-notification-channels.com/">all here</a>. We are going to use <a href="https://laravel-notification-channels.com/webpush/">web push</a> driver, let&#39;s pull it into our project.</p>
+Laravel support multiple notification drivers. You can find them [all here](https://laravel-notification-channels.com/). We are going to use [web push](https://laravel-notification-channels.com/webpush) driver, let's pull it into our project.
 
-~~~shell
+```shell
 composer require laravel-notification-channels/webpush
-~~~
+```
 
-<p>Now we need to run a command that will generate migrations and add <a href="https://blog.mozilla.org/services/2016/04/04/using-vapid-with-webpush/">VAPID keys</a> to our .env file. VAPID keys are used by push server to identify your server.</p>
+Now we need to run a command that will generate migrations and add [VAPID keys](https://blog.mozilla.org/services/2016/04/04/using-vapid-with-webpush) to our .env file. VAPID keys are used by push server to identify your server.
 
-~~~shell
+```shell
 php artisan vendor:publish --provider="NotificationChannels\WebPush\WebPushServiceProvider" --tag="migrations"
 php artisan webpush:vapid
-~~~
+```
 
-<p>Next let&#39;s run migrations and then seed the database with some test users.</p>
+Next let's run migrations and then seed the database with some test users.
 
-~~~php
+```php
 php artisan migrate
 php artisan db:seed
-~~~
+```
 
-<h2>Backend code and manager endpoints</h2>
+## Backend code and manager endpoints
 
-<p>In this part we&#39;re going to add our controller with some default methods we need and update our model with code for handling user push subscriptions.</p>
+In this part we're going to add our controller with some default methods we need and update our model with code for handling user push subscriptions.
 
-<p>You can use any model you want, in this case we are going to use already existing <code>User</code> model.</p>
+You can use any model you want, in this case we are going to use already existing `User` model.
 
-~~~php
+```php
 use Illuminate\Notifications\Notifiable;
 use NotificationChannels\WebPush\HasPushSubscriptions;
 
@@ -83,19 +83,19 @@ class User extends Authenticatable
 	
 	...
 }
-~~~
+```
 
-<p>Next we need a controller that will handle our subscriptions.</p>
+Next we need a controller that will handle our subscriptions.
 
-~~~shell
+```shell
 php artisan make:controller NotificationManagerController
-~~~
+```
 
-<p>Open the newly created file <code>app/Http/Controllers/NotificationManagerController.php</code>.</p>
+Open the newly created file `app/Http/Controllers/NotificationManagerController.php`.
 
-<p>We need two methods to handle our user push subscriptions, one for subscribing and one for unsubscribing. Luckily the trait we added to our user model has methods to handle this actions.</p>
+We need two methods to handle our user push subscriptions, one for subscribing and one for unsubscribing. Luckily the trait we added to our user model has methods to handle this actions.
 
-~~~php
+```php
 class NotificationManagerController extends Controller
 {
     public function subscribe(Request $req)
@@ -121,28 +121,30 @@ class NotificationManagerController extends Controller
         return response()->json(['message' => 'Unsubscribed!']);
     }
 }
-~~~
+```
 
-<p>Don&#39;t forget to register your routes</p>
+Don't forget to register your routes
 
-~~~php
+```php
 Route::post('/notifications/subscribe', [NotificationManagerController::class, 'subscribe']);
 Route::post('/notifications/unsubscribe', [NotificationManagerController::class, 'unsubscribe']);
-~~~
+```
 
-<h2>Frontend implementation</h2>
+## Frontend implementation
 
-<p>First we need to create and register our <a href="https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API/Using_Service_Workers">service worker</a>.</p>
+First we need to create and register our [service worker](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API/Using_Service_Workers).
 
-<blockquote></blockquote>
+> Service workers essentially act as proxy servers that sit between web applications, the browser, and the network (when available). They are intended, among other things, to enable the creation of effective offline experiences, intercept network requests and take appropriate action based on whether the network is available, and update assets residing on the server. They will also allow access to push notifications and background sync APIs.
 
-<p>So in short:</p>
+So in short:
 
-<ul><li>We need to create javascript file and register it as a service worker</li><li>Ask user for notification permission</li><li>Get the subscription from the browser and save it in our database</li></ul>
+- We need to create javascript file and register it as a service worker
+- Ask user for notification permission
+- Get the subscription from the browser and save it in our database
 
-<p>Let&#39;s create a file in our public directory called <code>sw.js</code> which will be our service worker.</p>
+Let's create a file in our public directory called `sw.js` which will be our service worker.
 
-~~~javascript
+```javascript
 "use strict";
 
 self.addEventListener("install", function(event) {
@@ -161,21 +163,21 @@ self.addEventListener("push", function(event) {
     const payload = event.data ? event.data.json() : {};
     event.waitUntil(self.registration.showNotification(payload.title, payload));
 });
-~~~
+```
 
-<p>Now we need to register it, we can do that in our main javascript file. Let&#39;s name this file <code>main.js</code> and put it in our <code>public/js</code> path.</p>
+Now we need to register it, we can do that in our main javascript file. Let's name this file `main.js` and put it in our `public/js` path.
 
-~~~javascript
+```javascript
 if ("serviceWorker" in navigator) {
     window.addEventListener("load", function() {
         navigator.serviceWorker.register("/sw.js");
     });
 }
-~~~
+```
 
-<p>Since we&#39;re already in our <code>main.js</code> file, we are going to add this helper method which will convert our <a href="https://w3c.github.io/push-api/#dom-pushsubscriptionoptions-applicationserverkey">VAPID key to ArrayBuffer</a>.</p>
+Since we're already in our `main.js` file, we are going to add this helper method which will convert our [VAPID key to ArrayBuffer](https://w3c.github.io/push-api/#dom-pushsubscriptionoptions-applicationserverkey).
 
-~~~javascript
+```javascript
 function urlBase64ToUint8Array(base64String) {
     var padding = "=".repeat((4 - (base64String.length % 4)) % 4);
     var base64 = (base64String + padding).replace(/\-/g, "+").replace(/_/g, "/");
@@ -189,11 +191,11 @@ function urlBase64ToUint8Array(base64String) {
 
     return outputArray;
 }
-~~~
+```
 
-<p>Now let&#39;s create subscribe method that will POST subscription data to our backend and save it. In this example I&#39;m using Fetch API to make HTTP requests, you can use also use the included axios library.</p>
+Now let's create subscribe method that will POST subscription data to our backend and save it. In this example I'm using Fetch API to make HTTP requests, you can use also use the included axios library.
 
-~~~javascript
+```javascript
 function subscribe(sub) {
     const key = sub.getKey('p256dh')
     const token = sub.getKey('auth')
@@ -222,11 +224,11 @@ function subscribe(sub) {
         console.error('Error:', error);
     });
 }
-~~~
+```
 
-<p>Next let&#39;s create a function that will initiate notification request from browser and call our subscribe method. Here you will need to enter VAPID public key which you can find <a href="https://laravel.com/docs/9.x/mix#environment-variables">in your environment</a>.</p>
+Next let's create a function that will initiate notification request from browser and call our subscribe method. Here you will need to enter VAPID public key which you can find [in your environment](https://laravel.com/docs/9.x/mix#environment-variables).
 
-~~~javascript
+```javascript
 const VAPID_PUBLIC_KEY = 'your-key';
 
 function enablePushNotifications() {
@@ -251,11 +253,11 @@ function enablePushNotifications() {
         });
     });
 }
-~~~
+```
 
-<p>Unsubscribe method is really simple, we just find the endpoint of existing subscription and send it to our backend endpoint.</p>
+Unsubscribe method is really simple, we just find the endpoint of existing subscription and send it to our backend endpoint.
 
-~~~javascript
+```javascript
 function disablePushNotifications() {
     navigator.serviceWorker.ready.then(registration => {
         registration.pushManager.getSubscription().then(subscription => {
@@ -285,11 +287,11 @@ function disablePushNotifications() {
         });
     });
 }
-~~~
+```
 
-<p>Our view code is really simple. First we need to add our <a href="https://laravel.com/docs/9.x/csrf#csrf-x-csrf-token">csrf-token meta tag</a> so we can send it with our HTTP requests. Next we reference our javascript file and create buttons that will handle our events.</p>
+Our view code is really simple. First we need to add our [csrf-token meta tag](https://laravel.com/docs/9.x/csrf#csrf-x-csrf-token) so we can send it with our HTTP requests. Next we reference our javascript file and create buttons that will handle our events.
 
-~~~html
+```html
 <!DOCTYPE html>
 <html>
   <head>
@@ -304,27 +306,25 @@ function disablePushNotifications() {
   </body>
 </html>
 
-~~~
+```
 
-<p>Please not that Notification API is not supported in all browsers.</p>
+Please not that Notification API is not supported in all browsers.
 
-<p>Biggest problem, at the time of the writing, is that there is no way to get web push notifications on iOS devices. <a href="https://webkit.org/blog/12288/working-together-on-interop-2022/">Although that is hopefully going to change in the future</a>.</p>
+Biggest problem, at the time of the writing, is that there is no way to get web push notifications on iOS devices. [Although that is hopefully going to change in the future](https://webkit.org/blog/12288/working-together-on-interop-2022).
 
-<p><em><strong>Update (2023-05-15):</strong></em></p>
+**Update (2023-05-15):** [Supported on iOS Safari since version 16.4](https://developer.apple.com/documentation/safari-release-notes/safari-16_4-release-notes).
 
-<p><a href="https://developer.apple.com/documentation/safari-release-notes/safari-16_4-release-notes">Supported on iOS Safari since version 16.4.</a></p>
+## Creating and sending our first notification
 
-<h2>Creating and sending our first notification</h2>
+We can create new notification by using artisan console.
 
-<p>We can create new notification by using artisan console.</p>
-
-~~~shell
+```shell
 php artisan make:notification NewUserActivity
-~~~
+```
 
-<p>This will create a new class in <code>app/Notifications</code>. Update it with the following.</p>
+This will create a new class in `app/Notifications`. Update it with the following.
 
-~~~php
+```php
 <?php
 
 declare(strict_types=1);
@@ -352,11 +352,11 @@ class NewUserActivity extends Notification
             ->body('This is notification body content. You are successfully subscribed!');
     }
 }
-~~~
+```
 
-<p>Next we are going to add new method to our <code>NotificationManagerController</code> class that will send our notification.</p>
+Next we are going to add new method to our `NotificationManagerController` class that will send our notification.
 
-~~~php
+```php
 use App\Notifications\NewUserActivity;
 
 public function send()
@@ -369,10 +369,12 @@ public function send()
 
 // Also don't forget to register new route
 Route::get('/notifications/send', [NotificationManagerController::class, 'send']);
-~~~
+```
 
-<p>Now when we visit <code>/notifications/send</code> you should see your new notification.</p>
+Now when we visit `/notifications/send` you should see your new notification.
 
-<p>Here&#39;s how it looks in firefox.</p>
+Here's how it looks in firefox.
 
-<p><img src="/assets/blog/notifcation-sent.png" alt="" />If you need some help, you can check out the <a href="https://github.com/karlomikus/webpush-demo">code for this project</a>.</p>
+![Notification sent image](/assets/blog/notifcation-sent.png)
+
+If you need some help, you can check out the [code for this project](https://github.com/karlomikus/webpush-demo).

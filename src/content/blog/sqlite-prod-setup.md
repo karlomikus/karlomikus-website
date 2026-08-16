@@ -5,10 +5,8 @@ date: '2024-01-16'
 permalink: /blog/sqlite-prod-setup/
 published: false
 ---
-<p>litestream</p>
+WIP
 
-<p>wal</p>
-
-<p>strict mode</p>
-
-<p></p>
+- litestream
+- wal mode
+- strict mode

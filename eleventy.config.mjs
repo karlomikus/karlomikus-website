@@ -1,4 +1,23 @@
 import markdownIt from "markdown-it";
+import { fromHighlighter } from "@shikijs/markdown-it/core";
+import { createHighlighterCore } from "shiki/core";
+import { createOnigurumaEngine } from "shiki/engine/oniguruma";
+
+const highlighter = await createHighlighterCore({
+  themes: [import("@shikijs/themes/dark-plus")],
+  langs: [
+    import("@shikijs/langs/php"),
+    import("@shikijs/langs/javascript"),
+    import("@shikijs/langs/shellscript"),
+    import("@shikijs/langs/html"),
+    import("@shikijs/langs/xml"),
+    import("@shikijs/langs/sql"),
+    import("@shikijs/langs/yaml"),
+    import("@shikijs/langs/apache"),
+    import("@shikijs/langs/ini"),
+  ],
+  engine: createOnigurumaEngine(() => import("shiki/wasm")),
+});
 
 export default function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("src/css/main.css");
@@ -33,7 +52,7 @@ export default function (eleventyConfig) {
       html: true,
       linkify: true,
       typographer: false,
-    })
+    }).use(fromHighlighter(highlighter, { theme: "dark-plus" }))
   );
 
   return {

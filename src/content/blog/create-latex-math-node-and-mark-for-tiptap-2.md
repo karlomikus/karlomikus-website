@@ -4,12 +4,11 @@ title: Create LaTeX math node and mark for tiptap 2
 date: '2022-04-05'
 permalink: /blog/create-latex-math-node-and-mark-for-tiptap-2/
 published: true
-hero_image: blog/blog_hero_images/latex-node.jpg
+hero_image: /assets/blog/blog_hero_images/latex-node.jpg
 og_title: Create LaTeX math node and mark for tiptap 2
 og_description: In this guide we will create a math input component for tiptap.
 og_type: article
-og_image: blog/blog_hero_images/latex-node.jpg
-author: e9e0cc08-2054-4b6c-a5ec-699b1591125a
+og_image: /assets/blog/blog_hero_images/latex-node.jpg
 ---
 <p><strong>Update 2023:</strong></p>
 

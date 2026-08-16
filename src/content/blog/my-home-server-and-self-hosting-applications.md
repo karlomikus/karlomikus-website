@@ -4,12 +4,11 @@ title: My home server and self hosting applications
 date: '2022-09-29'
 permalink: /blog/my-home-server-and-self-hosting-applications/
 published: true
-hero_image: blog/blog_hero_images/blog-self-hosted.jpg
+hero_image: /assets/blog/blog_hero_images/blog-self-hosted.jpg
 og_title: My home server and self hosting applications (2022)
 og_description: How I configured my home server for self hosting applications.
 og_type: article
-og_image: blog/blog_hero_images/blog-self-hosted.jpg
-author: e9e0cc08-2054-4b6c-a5ec-699b1591125a
+og_image: /assets/blog/blog_hero_images/blog-self-hosted.jpg
 ---
 <h2>Hardware</h2>
 
