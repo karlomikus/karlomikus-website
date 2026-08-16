@@ -10,45 +10,45 @@ og_description: In this guide we will create a math input component for tiptap.
 og_type: article
 og_image: /assets/blog/blog_hero_images/latex-node.jpg
 ---
-<p><strong>Update 2023:</strong></p>
+**Update 2023:**
 
-<p>TipTap now has <a href="https://tiptap.dev/docs/editor/api/extensions/mathematics">offical extension for LaTeX</a>.</p>
+TipTap now has [offical extension for LaTeX](https://tiptap.dev/docs/editor/api/extensions/mathematics).
 
-<p>------</p>
+In this guide we will create a math input component for [tiptap](https://tiptap.dev).
 
-<p>In this guide we will create a math input component for <a href="https://tiptap.dev/">tiptap</a>.</p>
+> tiptap is a headless wrapper around ProseMirror – a toolkit for building rich text WYSIWYG editors, which is already in use at many well-known companies such as New York Times, The Guardian or Atlassian.
 
-<blockquote></blockquote>
+Here's a picture of the finished editor project, a node view made as a Vue component, containing textarea for TeX input and a div with rendered preview.
 
-<p>Here&#39;s a picture of the finished editor project, a node view made as a Vue component, containing textarea for TeX input and a div with rendered preview.</p>
+<img src="/assets/blog/editor2.png" alt="" />
 
-<p><img src="/assets/blog/editor2.png" alt="" />Project setup</p>
+Project setup
 
-<p>I&#39;ll start with a default Vue 2 project created with <a href="https://cli.vuejs.org/guide/installation.html">Vue CLI</a>.</p>
+I'll start with a default Vue 2 project created with Vue CLI.
 
-<p>Next I&#39;ll add tiptap Vue component with the starter kit.</p>
+Next I'll add tiptap Vue component with the starter kit.
 
-~~~shell
+```shell
 yarn add @tiptap/vue-2 @tiptap/starter-kit
-~~~
+```
 
-<p>We&#39;re going to use <a href="https://katex.org/">KaTeX </a>to render out LaTeX typesetting.</p>
+We're going to use [KaTeX](https://katex.org) to render out LaTeX typesetting.
 
-<blockquote></blockquote>
+> KaTeX is a fast, easy-to-use JavaScript library for TeX math rendering on the web. KaTeX is compatible with all major browsers, including Chrome, Safari, Firefox, Opera, Edge, and IE 11. KaTeX supports much (but not all) of LaTeX and many LaTeX packages.
 
-~~~shell
+```shell
 yarn add katex
-~~~
+```
 
-<p>Now when we run <code>yarn serve</code>, we have our app up and running.</p>
+Now when we run `yarn serve`, we have our app up and running.
 
-<h2>Writing the component</h2>
+## Writing the component
 
-<p>Let&#39;s create our node view with Vue following the <a href="https://tiptap.dev/guide/node-views/vue">tiptap guide</a>.</p>
+Let's create our node view with Vue [following the tiptap guide](https://tiptap.dev/guide/node-views/vue).
 
-<p>First we create the component, let&#39;s call it <code>FormulaComponent.vue</code>. In template section we are going to use the following code.</p>
+First we create the component, let's call it `FormulaComponent.vue`. In template section we are going to use the following code.
 
-~~~html
+```html
 <template>
   <node-view-wrapper>
       <div class="katex-component" :class="{'is-selected': selected}">
@@ -61,13 +61,13 @@ yarn add katex
       </div>
   </node-view-wrapper>
 </template>
-~~~
+```
 
-<p>This contains our <code>textarea</code> in which we are going to input our LaTeX math formula, a link to remove the node and a div with the rendered formula.</p>
+This contains our `textarea` in which we are going to input our LaTeX math formula, a link to remove the node and a div with the rendered formula.
 
-<p>Next our script section looks like this.</p>
+Next our script section looks like this.
 
-~~~javascript
+```javascript
 import { NodeViewWrapper, nodeViewProps } from '@tiptap/vue-2'
 import katex from 'katex';
 
@@ -108,19 +108,19 @@ export default {
     }
   }
 }
-~~~
+```
 
-<p>Our <code>data</code> contains raw formula string that we initially pull from the <code>content</code> attribute of our custom tag.</p>
+Our `data` contains raw formula string that we initially pull from the `content` attribute of our custom tag.
 
-<p>Then we have <code>options</code> that will contain our options object for <a href="https://katex.org/docs/options.html">katex configuration</a>.</p>
+Then we have `options` that will contain our options object for katex configuration.
 
-<p>We will assign a watcher to our <code>rawFormula</code> variable that will update the <code>content</code> attribute of our node.</p>
+We will assign a watcher to our `rawFormula` variable that will update the `content` attribute of our node.
 
-<p>And at last we have an computed property called <code>renderedFormula</code> that will actually call katex to render the given LaTeX text.</p>
+And at last we have an computed property called `renderedFormula` that will actually call katex to render the given LaTeX text.
 
-<p>Next we need to create a <a href="https://prosemirror.net/docs/ref/#model.NodeSpec">prosemirror schema</a>.</p>
+Next we need to create a prosemirror schema.
 
-~~~javascript
+```javascript
 import { Node, mergeAttributes } from '@tiptap/core'
 import { VueNodeViewRenderer } from '@tiptap/vue-2'
 import Component from './FormulaComponent.vue'
@@ -160,23 +160,23 @@ export default Node.create({
   }
 })
 
-~~~
+```
 
-<p>As referenced previously we are going to need an attribute that will hold our LaTeX text called <code>content</code>.</p>
+As referenced previously we are going to need an attribute that will hold our LaTeX text called `content`.
 
-<p>Our parse and render methods are going to use custom tag called <code>&lt;katex&gt;</code>.</p>
+Our parse and render methods are going to use custom tag called `<katex>`.
 
-<p>So final node HTML is going to look like this.</p>
+So final node HTML is going to look like this.
 
-~~~html
+```html
 <katex content="\langle\nabla{L(\gamma(t),t)},d_{t}\gamma(t)\rangle\geq|\nabla{L}|_{m}|d_{t}\gamma(t)|_{m}"></katex>
-~~~
+```
 
-<p>Next we need a way to add our node from the editor. To do this we need to create a command that will insert the node at the current cursor position.</p>
+Next we need a way to add our node from the editor. To do this we need to create a command that will insert the node at the current cursor position.
 
-<p>Add the following to our schema.</p>
+Add the following to our schema.
 
-~~~javascript
+```javascript
 addCommands() {
   return {
     addKatex: (attrs) => ({state, dispatch}) => {
@@ -189,13 +189,13 @@ addCommands() {
     }
   }
 }
-~~~
+```
 
-<h2>Using marks for inline math</h2>
+## Using marks for inline math
 
-<p>For inline math formula rendering we&#39;re just gonna create a simple mark extension. It&#39;s just gonna create a <code>&lt;span&gt;</code> tag with <code>data-inline-katex</code> attribute so we can reference it later.</p>
+For inline math formula rendering we're just gonna create a simple mark extension. It's just gonna create a `&lt;span&gt;` tag with `data-inline-katex` attribute so we can reference it later.
 
-~~~javascript
+```javascript
 import { Mark, mergeAttributes } from '@tiptap/core'
 
 export default Mark.create({
@@ -230,28 +230,28 @@ export default Mark.create({
     },
 })
 
-~~~
+```
 
-<h2>Calling commands from editor</h2>
+## Calling commands from editor
 
-<p>For the actual editor we&#39;re going to follow the <a href="https://tiptap.dev/installation/vue2">steps from the tiptap docs</a>.</p>
+For the actual editor we're going to follow the <a href="https://tiptap.dev/installation/vue2">steps from the tiptap docs</a>.
 
-<p>The template is going to have our buttons that will run the commands we created.</p>
+The template is going to have our buttons that will run the commands we created.
 
-~~~html
+```html
 <button type="button" class="btn-editor" @click="editor.chain().focus().toggleFormulaMark().run()">
 	Inline math
 </button>
 <button type="button" class="btn-editor" @click="editor.chain().focus().addKatex().run()">
 	Math block
 </button>
-~~~
+```
 
-<h2>Displaying the resulting HTML</h2>
+## Displaying the resulting HTML
 
-<p>To display our block level math we&#39;re going to select all katex elements and tell katex to render it.</p>
+To display our block level math we're going to select all katex elements and tell katex to render it.
 
-~~~javascript
+```javascript
 document.querySelectorAll('katex').forEach(el =&gt; {
   katex.render(el.getAttribute('content'), el, {
     throwOnError: false,
@@ -260,23 +260,23 @@ document.querySelectorAll('katex').forEach(el =&gt; {
     maxSize: 300
   });
 })
-~~~
+```
 
-<p>And to render our inline mark, we&#39;re just going to use katex render method with <code>displayMode: false</code> option.</p>
+And to render our inline mark, we're just going to use katex render method with `displayMode: false` option.
 
-~~~javascript
+```javascript
 document.querySelectorAll('span[data-inline-katex]').forEach(el =&gt; {
   katex.render(el.innerText, el, {
     throwOnError: false,
     displayMode: false
   });
 });
-~~~
+```
 
-<h2>Summary</h2>
+## Summary
 
-<p>Check out the <a href="https://github.com/karlomikus/tiptap-latex-post">full source code here</a>, and <a href="https://karlomikus.com/posts/editor/">online demo here</a>.</p>
+Check out the <a href="https://github.com/karlomikus/tiptap-latex-post">full source code here</a>, and <a href="https://karlomikus.com/posts/editor/">online demo here</a>.
 
-<p>You should check similar packages in this space.</p>
+You should check similar packages in this space.
 
 <ul><li><a href="https://github.com/mathquill/mathquill">MathQuill</a> - Type math directly in your browser.</li><li><a href="https://www.mathjax.org/">MathJax</a> - Math typesetting similar to Katex.</li><li><a href="https://github.com/benrbray/prosemirror-math">Prosemirror Math</a> - Really detailed math schema for Prosemirror.</li></ul>
