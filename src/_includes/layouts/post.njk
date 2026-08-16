@@ -1,0 +1,19 @@
+---
+layout: layouts/base.njk
+---
+<div class="blog-entry">
+  <header>
+    <div class="header-content">
+      <h1 class="blog-entry__title">{{ title }}</h1>
+      <div class="blog-entry__meta">
+        Published on {{ date | humanDate }}
+      </div>
+    </div>
+    {% if hero_image %}
+      <img src="{{ hero_image }}" alt="{{ hero_alt or title }}" title="{{ hero_alt or title }}">
+    {% endif %}
+  </header>
+  <article class="blog-entry__article">
+    {{ content | safe }}
+  </article>
+</div>

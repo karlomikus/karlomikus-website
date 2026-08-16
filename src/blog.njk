@@ -1,0 +1,16 @@
+---
+layout: layouts/base.njk
+title: Blog
+permalink: /blog/
+---
+<div class="homepage">
+  <h2 class="site-subtitle">Blog</h2>
+  <div class="blog-posts">
+    {% for post in collections.publishedPosts %}
+      <a href="{{ post.url }}" class="blog-posts__post">
+        <span class="blog-posts__post__title">{{ post.data.title }}</span>
+        <span class="blog-posts__post__date">{{ post.date | humanDate }}</span>
+      </a>
+    {% endfor %}
+  </div>
+</div>

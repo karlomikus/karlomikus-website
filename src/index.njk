@@ -1,0 +1,37 @@
+---
+layout: layouts/base.njk
+title: KaMi
+permalink: /
+---
+<div class="homepage">
+  <h2 class="site-subtitle">About me</h2>
+  {{ home.content | safe }}
+
+  <h2 class="site-subtitle">I write about</h2>
+  <div class="blog-posts">
+    {% for post in collections.publishedPosts %}
+      <a href="{{ post.url }}" class="blog-posts__post">
+        <span class="blog-posts__post__title">{{ post.data.title }}</span>
+        <span class="blog-posts__post__date">{{ post.date | humanDate }}</span>
+      </a>
+    {% endfor %}
+  </div>
+
+  <h2 class="site-subtitle">I've worked on</h2>
+  <div class="projects">
+    {% for project in home.projects %}
+      <div class="projects__project">
+        <div class="projects__project__info">
+          <h3>{{ project.name }}</h3>
+          <h6>{{ project.year }}.</h6>
+          {{ project.info_html | safe }}
+          <ul>
+            {% for tag in project.tags %}
+              <li>{{ tag }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>

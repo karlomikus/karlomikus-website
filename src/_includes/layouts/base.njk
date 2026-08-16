@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#141414">
+    <title>{{ (title or site.name) + " · Personal website of Karlo Mikuš" }}</title>
+    <meta property="og:type" content="{{ og_type or 'website' }}">
+    <meta property="og:title" content="{{ og_title or openGraph.title }}">
+    <meta property="og:site_name" content="{{ openGraph.site_name }}">
+    <meta property="og:image" content="{{ og_image or openGraph.image_url }}">
+    <meta property="og:description" content="{{ og_description or openGraph.description }}">
+    <link rel="shortcut icon" href="/assets/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Mono&family=Khula:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/main.css">
+    <script defer data-domain="karlomikus.com" src="https://plausible.io/js/script.js"></script>
+  </head>
+  <body>
+    <main class="site-content">
+      <header class="site-header">
+        <a href="/">
+          <svg xmlns="http://www.w3.org/2000/svg" width="50.949" height="28.898" xml:space="preserve">
+            <path fill-rule="evenodd" clip-rule="evenodd" fill="#fff" d="m42.335 28.898-8.131-14.033h-.548l-8.131 14.033-8.131-14.033h-.647L8.615 28.898 0 14.033h9.269L17.4 0l8.131 14.033h.306L33.968 0 42.1 14.033h8.85l-8.615 14.865z"/>
+          </svg>
+        </a>
+      </header>
+      {{ content | safe }}
+      <h2 class="site-subtitle">Find me on</h2>
+      <ul class="links">
+        {% for item in footer.links %}
+          <li class="links__li--{{ loop.index }}"><a href="{{ item.url }}">{{ item.title }}</a></li>
+        {% endfor %}
+      </ul>
+    </main>
+  </body>
+</html>

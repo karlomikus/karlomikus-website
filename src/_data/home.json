@@ -1,0 +1,161 @@
+{
+  "content": "<p>I'm software developer living in Zagreb, Croatia. I finished college education at <a href=\"https://www.algebra.hr/visoko-uciliste\">Algebra</a> with bachelor's degree in computer science. I'm currently working at <a href=\"https://www.dhimahi.com/\">Dhimahi</a> making software solutions for ticket distribution.</p>\n",
+  "projects": [
+    {
+      "name": "Bar Assistant",
+      "year": "2023",
+      "tags": [
+        "Project",
+        "Server",
+        "Docker"
+      ],
+      "info_html": "<a href=\"https://barassistant.app/\">Bar Assistant</a> is an all-in-one solution for managing your home bar. This managed Bar Assistant includes a landing page and custom server infrastructure."
+    },
+    {
+      "name": "Recipe Utils",
+      "year": "2023",
+      "tags": [
+        "PHP",
+        "Composer"
+      ],
+      "info_html": "<a href=\"https://github.com/karlomikus/recipe-utils\">Recipe Utils</a> is a small package used to handle cocktail recipe ingredient parsing and converting."
+    },
+    {
+      "name": "Salt Rim",
+      "year": "2022",
+      "tags": [
+        "Project",
+        "Vue"
+      ],
+      "info_html": "<a href=\"https://github.com/karlomikus/vue-salt-rim\">Salt Rim</a> is a web client used for connecting to your Bar Assistant server. It's made with Vue.js and it builds to a static webpage that can be easily hosted anywhere."
+    },
+    {
+      "name": "Bar Assistant API",
+      "year": "2022",
+      "tags": [
+        "API",
+        "PHP",
+        "Laravel"
+      ],
+      "info_html": "<a href=\"https://github.com/karlomikus/bar-assistant\">Bar Assistant</a> is an backend API for managing your home bar. It allows you to add your ingredients, search for cocktails and create custom cocktail recipes."
+    },
+    {
+      "name": "Alatnica Mikuš",
+      "year": "2020",
+      "tags": [
+        "Design",
+        "CMS Integration"
+      ],
+      "info_html": "Complete website development for <a href=\"http://alatnicamikus.hr/\">Alatnica Mikuš</a>, company that is engaged in metalworking, manufactoring tools and machine proccessing."
+    },
+    {
+      "name": "eŠkola",
+      "year": "2020",
+      "tags": [
+        "HTML/JS/CSS",
+        "Laravel",
+        "Design"
+      ],
+      "info_html": "Improve the education experience. <a href=\"https://eskola.rs/\">eŠkola platform</a> improves efficiency in school administration, analytic and reporting as well a better and faster communication between school, parents and pupils."
+    },
+    {
+      "name": "Chrome2Pdf",
+      "year": "2019",
+      "tags": [
+        "PHP",
+        "Composer"
+      ],
+      "info_html": "<a href=\"https://packagist.org/packages/tesla-software/chrome2pdf\">Open on packagist.</a> Convert HTML to Pdf using headless chrome."
+    },
+    {
+      "name": "JMBG",
+      "year": "2019",
+      "tags": [
+        "PHP",
+        "Composer"
+      ],
+      "info_html": "<a href=\"https://packagist.org/packages/tesla-software/jmbg\">Open on packagist.</a> Validate, generate and extract data from JMBG (Unique Master Citizen Number)."
+    },
+    {
+      "name": "ес Дневник",
+      "year": "2017",
+      "tags": [
+        "Laravel",
+        "Design",
+        "HTML/CSS/JS"
+      ],
+      "info_html": "<a href=\"https://www.esdnevnik.rs/\">ес Дневник</a> is a online service for management of digital records and data of Serbian primary and secondary schools."
+    },
+    {
+      "name": "Laravel Multilog",
+      "year": "2016",
+      "tags": [
+        "PHP",
+        "Composer"
+      ],
+      "info_html": "<a href=\"https://packagist.org/packages/karlomikus/multilog\">Open on packagist.</a> Easily add multiple monolog channels to your Laravel 5.2.* application."
+    },
+    {
+      "name": "Laravel Theme",
+      "year": "2015",
+      "tags": [
+        "PHP",
+        "Composer"
+      ],
+      "info_html": "<a href=\"https://packagist.org/packages/karlomikus/theme\">Open on packagist.</a> Add theming support to your Laravel 5.* projects."
+    },
+    {
+      "name": "E-Dnevnik",
+      "year": "2014",
+      "tags": [
+        "PHP"
+      ],
+      "info_html": "<a href=\"http://www.carnet.hr/en/e_class_register\">E-Dnevnik</a> is a web application for the management of the class register in electronic form, which began as a pilot project at the beginning of the 2011/2012 school year."
+    },
+    {
+      "name": "Mogy",
+      "year": "2014",
+      "tags": [
+        "C#",
+        "HTML/CSS/JS"
+      ],
+      "info_html": "<a href=\"http://mogy.me/\">Mogy</a> is a unique tool for the modern coach. I was involved in development in 2nd phase of the project."
+    },
+    {
+      "name": "Mobendo",
+      "year": "2014",
+      "tags": [
+        "Wordpress",
+        "HTML/CSS/JS"
+      ],
+      "info_html": "<a href=\"http://mobendo.com/\">Mobendo</a> is a company specialized in providing mobile and web custom solutions to their clients."
+    },
+    {
+      "name": "Saltkin",
+      "year": "2014",
+      "tags": [
+        "Design",
+        "HTML/CSS/JS"
+      ],
+      "info_html": "<a href=\"http://themeforest.net/item/saltkin-responsive-bootstrap-3-admin-template/7783566\">Saltkin</a> is a responsive admin dashboard template based on Bootstrap 3 framework. It offers a variety of layout options and it’s fully responsive and HTML5/CSS3 compliant."
+    },
+    {
+      "name": "MobilityDay 2014",
+      "year": "2014",
+      "tags": [
+        "Wordpress",
+        "HTML/CSS/JS"
+      ],
+      "info_html": "<a href=\"http://mobilityday.com/\">MobilityDay</a> is a conference targeting IT professionals who are involved in mobile solutions."
+    },
+    {
+      "name": "Kato",
+      "year": "2013",
+      "tags": [
+        "Design",
+        "HTML/CSS/JS"
+      ],
+      "info_html": "Personal project, <a href=\"http://themeforest.net/item/kato-responsive-admin-template/5442409\">Kato</a> is bootstrap 3 based HTML5 admin responsive template. It features simple clean design with easily changeable colors."
+    }
+  ]
+}

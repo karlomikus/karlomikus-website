@@ -1,0 +1,493 @@
+pre[class*="language-"].line-numbers {
+	position: relative;
+	padding-left: 3.8em;
+	counter-reset: linenumber;
+}
+
+pre[class*="language-"].line-numbers > code {
+	position: relative;
+	white-space: inherit;
+}
+
+.line-numbers .line-numbers-rows {
+	position: absolute;
+	pointer-events: none;
+	top: 0;
+	font-size: 100%;
+	left: -3.8em;
+	width: 3em; /* works for line-numbers below 1000 lines */
+	letter-spacing: -1px;
+	border-right: 1px solid #999;
+
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+
+}
+
+	.line-numbers-rows > span {
+		display: block;
+		counter-increment: linenumber;
+	}
+
+		.line-numbers-rows > span:before {
+			content: counter(linenumber);
+			color: #999;
+			display: block;
+			padding-right: 0.8em;
+			text-align: right;
+		}
+
+/*
+ * Based on Plugin: Syntax Highlighter CB
+ * Plugin URI: http://wp.tutsplus.com/tutorials/plugins/adding-a-syntax-highlighter-shortcode-using-prism-js
+ * Description: Highlight your code snippets with an easy to use shortcode based on Lea Verou's Prism.js.
+ * Version: 1.0.0
+ * Author: c.bavota
+ * Author URI: http://bavotasan.comhttp://wp.tutsplus.com/tutorials/plugins/adding-a-syntax-highlighter-shortcode-using-prism-js/ */
+/* http://cbavota.bitbucket.org/syntax-highlighter/  */
+
+/* =====   ===== */
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #fff;
+	text-shadow: 0 1px 1px #000;
+	font-family: Menlo, Monaco, "Courier New", monospace;
+	direction: ltr;
+	text-align: left;
+	word-spacing: normal;
+	white-space: pre;
+	word-wrap: normal;
+	line-height: 1.4;
+	background: none;
+	border: 0;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+pre[class*="language-"] code {
+	float: left;
+	padding: 0 15px 0 0;
+}
+
+pre[class*="language-"],
+:not(pre) > code[class*="language-"] {
+	background: #222;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 15px;
+	margin: 1em 0;
+	overflow: auto;
+	border-radius: 8px;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: 5px 10px;
+	line-height: 1;
+	border-radius: 3px;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #797979;
+}
+
+.token.selector,
+.token.operator,
+.token.punctuation {
+	color: #fff;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.tag,
+.token.boolean {
+	color: #ffd893;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.hex,
+.token.string {
+	color: #B0C975;
+}
+
+.token.property,
+.token.entity,
+.token.url,
+.token.attr-name,
+.token.keyword {
+	color: #c27628;
+}
+
+.token.regex {
+	color: #9B71C6;
+}
+
+.token.entity {
+	cursor: help;
+}
+
+.token.function,
+.token.constant {
+	color: #e5a638;
+}
+
+.token.variable {
+	color: #fdfba8;
+}
+
+.token.number {
+	color: #8799B0;
+}
+
+.token.important,
+.token.deliminator {
+	color: #E45734;
+}
+
+/* Line highlight plugin */
+.line-highlight.line-highlight {
+	background: rgba(255, 255, 255, .2);
+}
+
+.line-highlight.line-highlight:before,
+.line-highlight.line-highlight[data-end]:after {
+	top: .3em;
+	background-color: rgba(255, 255, 255, .3);
+	color: #fff;
+	border-radius: 8px;
+}
+
+/* for line numbers */
+/* span instead of span:before for a two-toned border */
+.line-numbers .line-numbers-rows > span {
+	border-right: 3px #d9d336 solid;
+}
+
+@charset "UTF-8";
+/*
+  1. Use a more-intuitive box-sizing model.
+*/
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/*
+    2. Remove default margin
+  */
+* {
+  margin: 0;
+}
+
+/*
+    3. Allow percentage-based heights in the application
+  */
+html,
+body {
+  height: 100%;
+}
+
+/*
+    Typographic tweaks!
+    4. Add accessible line-height
+    5. Improve text rendering
+  */
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/*
+    6. Improve media defaults
+  */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+/*
+    7. Remove built-in form typography styles
+  */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/*
+    8. Avoid text overflows
+  */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+body {
+  font-family: "Fira Mono", Menlo, Monaco, "Courier New", monospace;
+  background: #141414;
+  color: #fff;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Khula", sans-serif;
+  font-weight: 300;
+}
+
+p {
+  line-height: 28px;
+}
+
+code[class*=language-], pre[class*=language-] {
+  font-family: "Fira Mono", Menlo, Monaco, "Courier New", monospace;
+}
+
+a {
+  color: #a6a6a6;
+  -webkit-text-decoration-color: silver;
+          text-decoration-color: silver;
+}
+a:hover, a:focus, a:active {
+  color: #ff4e2b;
+  -webkit-text-decoration-color: #ff795e;
+          text-decoration-color: #ff795e;
+}
+
+.site-content {
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto 80px auto;
+}
+
+@media (max-width: 700px) {
+  .site-content {
+    max-width: 100%;
+    padding: 0 10px;
+  }
+}
+.site-header {
+  margin: 60px 0;
+}
+
+.site-subtitle {
+  margin-top: 40px;
+  margin-bottom: 10px;
+  color: #a6a6a6;
+}
+
+.projects {
+  display: flex;
+  flex-wrap: wrap;
+  margin: -15px;
+}
+.projects .projects__project {
+  background: #212121;
+  width: 335px;
+  margin: 15px;
+}
+.projects .projects__project .projects__project__info {
+  padding: 20px;
+}
+.projects .projects__project .projects__project__info h3 {
+  font-weight: 300;
+  font-family: "Fira Mono", Menlo, Monaco, "Courier New", monospace;
+}
+.projects .projects__project .projects__project__info h6 {
+  margin-bottom: 10px;
+  color: #a6a6a6;
+}
+.projects .projects__project .projects__project__info p {
+  line-height: 1.5rem;
+  opacity: 0.7;
+}
+.projects .projects__project .projects__project__info ul {
+  list-style: none;
+  margin: -3px;
+  padding: 10px 0 0 0;
+  display: flex;
+}
+.projects .projects__project .projects__project__info ul li {
+  background: #141414;
+  font-size: 12px;
+  padding: 2px 7px;
+  margin: 3px;
+}
+.projects .projects__project:hover {
+  background: #1b1b1b;
+}
+.projects .projects__project:hover p {
+  opacity: 1;
+}
+
+@media (max-width: 700px) {
+  .projects {
+    flex-wrap: wrap;
+    margin: 0;
+  }
+  .projects .projects__project {
+    width: 100%;
+    margin: 0 0 15px 0;
+  }
+}
+.links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.links li a {
+  display: block;
+  color: #141414;
+  text-decoration: none;
+  padding: 3px 10px;
+}
+.links li.links__li--1 a {
+  background: #ff4e2b;
+}
+.links li.links__li--1 a:hover, .links li.links__li--1 a:focus, .links li.links__li--1 a:active {
+  background: #fff;
+}
+.links li.links__li--2 a {
+  background: #ff411c;
+}
+.links li.links__li--2 a:hover, .links li.links__li--2 a:focus, .links li.links__li--2 a:active {
+  background: #fff;
+}
+.links li.links__li--3 a {
+  background: #ff3911;
+}
+.links li.links__li--3 a:hover, .links li.links__li--3 a:focus, .links li.links__li--3 a:active {
+  background: #fff;
+}
+.links li.links__li--4 a {
+  background: #fc2a00;
+}
+.links li.links__li--4 a:hover, .links li.links__li--4 a:focus, .links li.links__li--4 a:active {
+  background: #fff;
+}
+
+.blog-posts .blog-posts__post {
+  display: block;
+  background: #212121;
+  padding: 20px;
+  margin-bottom: 10px;
+  text-decoration: none;
+}
+.blog-posts .blog-posts__post .blog-posts__post__title {
+  display: block;
+  color: #fff;
+}
+.blog-posts .blog-posts__post .blog-posts__post__date {
+  display: inline-block;
+  font-family: "Khula", sans-serif;
+}
+.blog-posts .blog-posts__post:last-child {
+  margin-bottom: 0;
+}
+.blog-posts .blog-posts__post:hover, .blog-posts .blog-posts__post:focus, .blog-posts .blog-posts__post:active {
+  background: #1b1b1b;
+}
+
+.blog-entry header {
+  position: relative;
+  margin-bottom: 40px;
+  border: 5px solid rgba(0, 0, 0, 0.6);
+}
+.blog-entry header .header-content {
+  padding: 0.6rem;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.9);
+}
+.blog-entry .blog-entry__meta {
+  color: #a6a6a6;
+}
+.blog-entry .blog-entry__article p {
+  margin-bottom: 20px;
+  line-height: 22px;
+}
+.blog-entry .blog-entry__article blockquote {
+  background: #142b28;
+  border-left: 5px solid #1e443f;
+  padding: 20px;
+  margin-bottom: 30px;
+}
+.blog-entry .blog-entry__article blockquote p {
+  margin: 0 0 0 10px;
+}
+.blog-entry .blog-entry__article pre {
+  margin-bottom: 30px;
+}
+.blog-entry .blog-entry__article p > code {
+  color: #e5a638;
+  padding: 2px 6px;
+  font-family: "Fira Mono", Menlo, Monaco, "Courier New", monospace;
+  background: #222222;
+}
+.blog-entry .blog-entry__article h2 {
+  margin: 40px 0 20px 0;
+  color: #a6a6a6;
+}
+.blog-entry .blog-entry__article ul {
+  list-style: none;
+  padding: 0 0 0 10px;
+}
+.blog-entry .blog-entry__article ul p {
+  margin: 0;
+}
+.blog-entry .blog-entry__article ul li {
+  display: flex;
+  margin-bottom: 20px;
+}
+.blog-entry .blog-entry__article ul li::before {
+  content: "‣";
+  line-height: 28px;
+  font-size: 2rem;
+  margin-right: 10px;
+  color: #a6a6a6;
+}
+.blog-entry .blog-entry__article img {
+  border: 3px solid #222222;
+  padding: 5px;
+  margin: 0 auto 30px auto;
+}
+.blog-entry .blog-entry__article table {
+  width: 100%;
+  border-spacing: 5px;
+  border: 2px solid #222222;
+  margin-bottom: 30px;
+}
+.blog-entry .blog-entry__article table tr th {
+  text-align: left;
+}
+.blog-entry .blog-entry__article table tr td p, .blog-entry .blog-entry__article table tr th p {
+  margin: 0;
+}
+.blog-entry .blog-entry__article table tr td {
+  background: #222222;
+  padding: 5px 8px;
+}
