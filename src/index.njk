@@ -25,11 +25,6 @@ permalink: /
           <h3>{{ project.name }}</h3>
           <h6>{{ project.year }}.</h6>
           {{ project.info_html | safe }}
-          <ul>
-            {% for tag in project.tags %}
-              <li>{{ tag }}</li>
-            {% endfor %}
-          </ul>
         </div>
       </div>
     {% endfor %}
